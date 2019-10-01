@@ -27,10 +27,14 @@
                             @method('put')
 
                             <label for="make">Car Make</label>
-                            <input type="text" name="make" id="make" value="{{ old('make', $auto->make) }}"><br />
+                            <input type="text" name="make" id="make" value="{{ old('make', $auto->make) }}"><br/>
 
                             <label for="model">Car Model</label>
-                            <input type="text" name="model" id="model" value="{{ old('model', $auto->model) }}">
+                            <input type="text" name="model" id="model" value="{{ old('model', $auto->model) }}"><br/>
+
+                            @foreach($categories as $categoryId => $name)
+                                <input type="checkbox" name="categories[]" value="{{$categoryId}}">{{$name}}<br/>
+                            @endforeach
 
                             <input type="submit" name="submit" value="Update">
                         </form>

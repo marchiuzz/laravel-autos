@@ -44,6 +44,15 @@ abstract class Repository
         return $this->makeQuery()->orderByDesc("id")->paginate($perPage, $columns);
     }
 
+    public function orderedPaginateWithRelationship(array $relationship, int $perPage = self::DEFAULT_PER_PAGE, array $columns = ['*']): LengthAwarePaginator
+    {
+        return $this->makeQuery()->with($relationship)->orderByDesc("id")->paginate($perPage, $columns);
+    }
+
+    public function with(array $relationships): Builder
+    {
+        return $this->makeQuery()->with($relationships);
+    }
 
     public function update(array $data, $attributeValue, string $attributeField = self::DEFAULT_ATTRIBUTE_FIELD): int
     {

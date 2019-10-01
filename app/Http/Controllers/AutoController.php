@@ -66,8 +66,11 @@ class AutoController extends Controller
 
     public function edit(Auto $auto): View
     {
+        $categories = $this->categoryService->pluck();
+
         return view('autos.edit', [
-            'auto' => $auto
+            'auto' => $auto,
+            'categories' => $categories
         ]);
     }
 

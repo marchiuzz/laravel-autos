@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Auto;
+use App\Repositories\Abstracts\Repository;
 use App\Repositories\AutoRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,7 @@ class AutoService
 
     public function paginate(): LengthAwarePaginator
     {
-        return $this->autoRepository->orderedPaginate();
+        return $this->autoRepository->with(['categories'])->orderByDesc('id')->paginate(Repository::DEFAULT_PER_PAGE);
     }
 
     public function createNewCar(string $make, string $model, array $categories): Model
