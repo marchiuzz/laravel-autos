@@ -32,9 +32,9 @@ class AutoService
         return $this->autoRepository->paginate();
     }
 
-    public function createNewCar(string $make, string $model)
+    public function createNewCar(string $make, string $model): Model
     {
-        $this->autoRepository->create([
+        return $this->autoRepository->create([
             'make' => $make,
             'model' => $model
         ]);

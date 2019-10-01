@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImageFieldToAutosTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddImageFieldToAutosTable extends Migration
      */
     public function up()
     {
-        Schema::table('autos', function (Blueprint $table) {
-            $table->string('image')->after('model');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
+            $table->string('name');
         });
     }
 
@@ -25,8 +27,6 @@ class AddImageFieldToAutosTable extends Migration
      */
     public function down()
     {
-        Schema::table('autos', function (Blueprint $table) {
-            $table->dropColumn('image');
-        });
+        Schema::dropIfExists('categories');
     }
 }
