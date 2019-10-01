@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class Repository
 {
-    const DEFAULT_PER_PAGE = 15;
+    const DEFAULT_PER_PAGE = 5;
     const DEFAULT_ATTRIBUTE_FIELD = "id";
 
     abstract public function model(): string;

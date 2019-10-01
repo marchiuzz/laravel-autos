@@ -18,7 +18,6 @@
                             <th>Action</th>
                         </tr>
 
-                        @foreach($autos as $auto)
                             <tr>
                                 <td>{{ $auto->id }}</td>
                                 <td>{{ $auto->make }}</td>
@@ -26,24 +25,15 @@
                                 <td>{{ $auto->created_at }}</td>
                                 <td>{{ $auto->updated_at }}</td>
                                 <td>
-                                    <a href="{{ route('admin.autos.edit', ['auto' => $auto->id]) }}">Edit</a><br />
-                                    <a href="{{ route('admin.autos.show', ['auto' => $auto->id]) }}">Show</a><br />
-
                                     <form action="{{ route('admin.autos.destroy', ['auto' => $auto->id]) }}" method="post">
                                         @csrf
                                         @method('delete')
                                         <input type="submit" onclick="return confirm('Are your sure?')" name="deleteAuto" value="Delete">
                                     </form>
-
-
                                 </td>
                             </tr>
-
-                        @endforeach
-
                     </table>
 
-                    {{$autos->links()}}
 
                 </div>
             </div>

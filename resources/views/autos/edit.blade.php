@@ -22,16 +22,17 @@
 
 
                     <div class="card-body">
-                        <form action="{{ route('admin.autos.store') }}" method="post">
+                        <form action="{{ route('admin.autos.update', ['auto' => $auto->id]) }}" method="POST">
                             @csrf
+                            @method('put')
 
                             <label for="make">Car Make</label>
-                            <input type="text" name="make" id="make" value="{{ old('make') }}"><br />
+                            <input type="text" name="make" id="make" value="{{ $auto->make }}"><br />
 
                             <label for="model">Car Model</label>
-                            <input type="text" name="model" id="model" value="{{ old('model') }}">
+                            <input type="text" name="model" id="model" value="{{ $auto->model }}">
 
-                            <input type="submit" name="submit" value="Add Car">
+                            <input type="submit" name="submit" value="Update">
                         </form>
                     </div>
                 </div>
