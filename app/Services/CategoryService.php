@@ -7,6 +7,8 @@ namespace App\Services;
 use App\Repositories\CategoryRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+
 
 class CategoryService
 {
@@ -47,5 +49,11 @@ class CategoryService
     public function delete(int $id)
     {
         return $this->categoryRepository->delete($id);
+    }
+
+    public function pluck(): Collection
+    {
+        $categories = $this->categoryRepository->makeQuery()->pluck('name', 'id');
+        return $categories;
     }
 }

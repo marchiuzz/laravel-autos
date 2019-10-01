@@ -29,15 +29,20 @@ class AutoService
 
     public function paginate(): LengthAwarePaginator
     {
-        return $this->autoRepository->paginate();
+        return $this->autoRepository->orderedPaginate();
     }
 
-    public function createNewCar(string $make, string $model): Model
+    public function createNewCar(string $make, string $model, array $categories): Model
     {
-        return $this->autoRepository->create([
+        /** @var Auto $auto */
+        $auto = $this->autoRepository->create([
             'make' => $make,
             'model' => $model
         ]);
+
+        $auto->categories()->attach($categories);
+
+        return $auto;
     }
 
     /**

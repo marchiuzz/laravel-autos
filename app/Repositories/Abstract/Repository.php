@@ -39,6 +39,12 @@ abstract class Repository
         return $this->makeQuery()->paginate($perPage, $columns);
     }
 
+    public function orderedPaginate(int $perPage = self::DEFAULT_PER_PAGE, array $columns = ['*']): LengthAwarePaginator
+    {
+        return $this->makeQuery()->orderByDesc("id")->paginate($perPage, $columns);
+    }
+
+
     public function update(array $data, $attributeValue, string $attributeField = self::DEFAULT_ATTRIBUTE_FIELD): int
     {
         return $this->makeQuery()->where($attributeField, $attributeValue)->update($data);

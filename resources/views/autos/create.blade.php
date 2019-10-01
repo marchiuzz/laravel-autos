@@ -26,10 +26,14 @@
                             @csrf
 
                             <label for="make">Car Make</label>
-                            <input type="text" name="make" id="make" value="{{ old('make') }}"><br />
+                            <input type="text" name="make" id="make" value="{{ old('make') }}"><br/>
 
                             <label for="model">Car Model</label>
-                            <input type="text" name="model" id="model" value="{{ old('model') }}">
+                            <input type="text" name="model" id="model" value="{{ old('model') }}"><br />
+
+                            @foreach($categories as $categoryId => $name)
+                                <input type="checkbox" name="categories[]" value="{{$categoryId}}">{{$name}}<br />
+                            @endforeach
 
                             <input type="submit" name="submit" value="Add Car">
                         </form>

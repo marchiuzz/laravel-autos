@@ -25,7 +25,8 @@ class AutoRequest extends FormRequest
     {
         return [
             "make" => "required|string|min:1|max:20",
-            "model" => "required|string|min:1|max:20"
+            "model" => "required|string|min:1|max:20",
+            "categories" => "required|array"
         ];
     }
 
@@ -37,6 +38,11 @@ class AutoRequest extends FormRequest
     public function getModel()
     {
         return $this->input('model');
+    }
+
+    public function getSelectedCategories()
+    {
+        return $this->input('categories');
     }
 
 }

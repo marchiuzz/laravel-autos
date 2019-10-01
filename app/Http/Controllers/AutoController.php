@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Auto;
+use App\Category;
 use App\Http\Requests\AutoRequest;
 
 use App\Services\AutoService;
+use App\Services\CategoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,14 +22,17 @@ class AutoController extends Controller
      * @var AutoService
      */
     protected $autoService;
+    protected $categoryService;
 
     /**
      * AutoController constructor.
      * @param AutoService $autoService
+     * @param CategoryService $categoryService
      */
-    public function __construct(AutoService $autoService)
+    public function __construct(AutoService $autoService, CategoryService $categoryService)
     {
         $this->autoService = $autoService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -44,12 +49,17 @@ class AutoController extends Controller
 
     public function create(): View
     {
-        return view('autos.create');
+        $categories = $this->categoryService->pluck();
+
+
+        return view('autos.create', [
+            'categories' => $categories
+        ]);
     }
 
     public function store(AutoRequest $request): RedirectResponse
     {
-        $this->autoService->createNewCar($request->getMake(), $request->getModel());
+        $this->autoService->createNewCar($request->getMake(), $request->getModel(), $request->getSelectedCategories());
 
         return redirect()->route('admin.autos.index');
     }
