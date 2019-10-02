@@ -26,7 +26,7 @@
                             @csrf
 
                             <label for="make">Option Name</label>
-                            <input type="text" name="option_name" id="option_name" value="{{ old('name') }}"><br />
+                            <input type="text" name="option_name" id="option_name" value="{{ old('option_name') }}"><br />
 
                             <input type="submit" name="submit" value="Add Option">
                         </form>

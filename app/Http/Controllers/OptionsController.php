@@ -2,18 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OptionsRequest;
+use App\Services\OptionService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class OptionsController extends Controller
 {
+
+    /**
+     * @var OptionService
+     */
+    private $optionService;
+
+    public function __construct(OptionService $optionService)
+    {
+        $this->optionService = $optionService;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
-        //
+        $options = $this->optionService->paginate();
+
+        return view('options.index', [
+            'options' => $options
+        ]);
     }
 
     /**
@@ -21,9 +40,9 @@ class OptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('options.create');
     }
 
     /**
@@ -32,9 +51,11 @@ class OptionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OptionsRequest $request): RedirectResponse
     {
-        //
+        $this->optionService->createNewOption($request->getName());
+
+        return redirect()->route('admin.options.index');
     }
 
     /**
@@ -43,9 +64,13 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): View
     {
-        //
+        $option = $this->optionService->findOptionById($id);
+
+        return view('options.show', [
+            'option' => $option
+        ]);
     }
 
     /**
@@ -54,9 +79,13 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        //
+        $option = $this->optionService->findOptionById($id);
+
+        return view('options.edit', [
+            'option' => $option
+        ]);
     }
 
     /**
@@ -66,9 +95,11 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OptionsRequest $request, int $id): RedirectResponse
     {
-        //
+        $this->optionService->update($id, $request->getName());
+
+        return redirect()->route('admin.options.index');
     }
 
     /**
@@ -77,8 +108,10 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        $this->optionService->delete($id);
+
+        return redirect()->route('admin.options.index');
     }
 }

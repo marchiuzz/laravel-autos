@@ -22,14 +22,19 @@
 
 
                     <div class="card-body">
-                        <form action="{{ route('admin.options.update', ['option' => $option->id]) }}" method="POST">
+                        <form action="{{ route('admin.options.values.store') }}" method="post">
                             @csrf
-                            @method('put')
 
                             <label for="make">Option Name</label>
-                            <input type="text" name="option_name" id="option_name" value="{{ old('option_name', $option->option_name) }}"><br />
+                            <input type="text" name="option_value" id="option_value" value="{{ old('option_value') }}"><br />
 
-                            <input type="submit" name="submit" value="Update">
+                            <select name="options">
+                            @foreach($options as $optionId => $optionName)
+                                <option value="{{ $optionId }}">{{ $optionName }}</option>
+                            @endforeach
+                            </select><br />
+
+                            <input type="submit" name="submit" value="Add Value">
                         </form>
                     </div>
                 </div>

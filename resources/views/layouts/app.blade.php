@@ -56,7 +56,11 @@
                                 <a class="nav-link" href="{{ route('admin.categories.index') }}">Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.options.index') }}">Categories</a>
+                                <a class="nav-link" href="{{ route('admin.options.index') }}">Options</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.options.values.index') }}">Options Values</a>
                             </li>
 
                             <li class="nav-item dropdown">

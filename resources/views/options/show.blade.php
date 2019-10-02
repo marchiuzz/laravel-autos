@@ -19,7 +19,7 @@
 
                             <tr>
                                 <td>{{ $option->id }}</td>
-                                <td>{{ $option->name }}</td>
+                                <td>{{ $option->option_name }}</td>
                                 <td>{{ $option->created_at }}</td>
                                 <td>{{ $option->updated_at }}</td>
                                 <td>

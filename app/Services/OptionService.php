@@ -21,11 +21,11 @@ class OptionService
         $this->optionRepository = $optionRepository;
     }
 
-    public function update(int $categoryId, string $name): int
+    public function update(int $optionId, string $name): int
     {
         return $this->optionRepository->update([
             'option_name' => $name
-        ], $categoryId);
+        ], $optionId);
     }
 
     public function paginate(): LengthAwarePaginator
@@ -36,7 +36,7 @@ class OptionService
     public function createNewOption(string $name): Model
     {
         return $this->optionRepository->create([
-            'option_ame' => $name
+            'option_name' => $name
         ]);
     }
 
