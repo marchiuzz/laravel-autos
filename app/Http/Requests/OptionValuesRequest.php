@@ -24,7 +24,8 @@ class OptionValuesRequest extends FormRequest
     public function rules()
     {
         return [
-            'option_value' => "required|string|min:1|max:20"
+            'option_value' => "required|string|min:1|max:20",
+            'options' => "required|int"
         ];
     }
 

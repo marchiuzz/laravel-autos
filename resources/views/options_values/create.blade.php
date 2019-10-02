@@ -22,7 +22,7 @@
 
 
                     <div class="card-body">
-                        <form action="{{ route('admin.options.values.store') }}" method="post">
+                        <form action="{{ route('admin.options_values.store') }}" method="post">
                             @csrf
 
                             <label for="make">Option Name</label>

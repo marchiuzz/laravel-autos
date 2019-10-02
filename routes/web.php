@@ -19,19 +19,17 @@ Route::get('/', function () {
 });
 
 
-
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin'], function () {
     Auth::routes(["register" => false]);
 
-    Route::group(['middleware' => ['auth'], 'as' => 'admin.'], function(){
+    Route::group(['middleware' => ['auth'], 'as' => 'admin.'], function () {
         Route::resource('autos', 'AutoController');
         Route::resource('categories', 'CategoryController');
 
 
-        Route::group(['prefix' => 'options', 'as' => 'options.'], function(){
-            Route::resource('', 'OptionsController');
-            Route::resource('values', 'OptionsValuesController');
-        });
+        Route::resource('options', 'OptionsController');
+        Route::resource('options_values', 'OptionsValuesController');
+
 
     });
 

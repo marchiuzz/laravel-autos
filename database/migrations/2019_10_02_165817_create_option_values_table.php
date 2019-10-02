@@ -16,7 +16,10 @@ class CreateOptionValuesTable extends Migration
         Schema::create('option_values', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('option_value');
+            $table->unsignedBigInteger('option_id');
             $table->timestamps();
+
+            $table->foreign('option_id')->on('options')->references('id')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -60,7 +60,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.options.values.index') }}">Options Values</a>
+                                <a class="nav-link" href="{{ route('admin.options_values.index') }}">Options Values</a>
                             </li>
 
                             <li class="nav-item dropdown">

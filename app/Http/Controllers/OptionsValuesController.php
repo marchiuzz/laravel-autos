@@ -61,9 +61,9 @@ class OptionsValuesController extends Controller
      */
     public function store(OptionValuesRequest $request): RedirectResponse
     {
-        $this->optionValueService->createNewOption($request->getValue());
+        $this->optionValueService->createNewOption($request->getValue(), $request->getSelectedOption());
 
-        return redirect()->route('admin.options.values.index');
+        return redirect()->route('admin.options_values.index');
     }
 
     /**
@@ -76,7 +76,7 @@ class OptionsValuesController extends Controller
     {
         $value = $this->optionValueService->findOptionValueById($id);
 
-        return view('options_value.show', [
+        return view('options_values.show', [
             'value' => $value
         ]);
     }
@@ -89,10 +89,12 @@ class OptionsValuesController extends Controller
      */
     public function edit(int $id): View
     {
+        $options = $this->optionService->pluck();
         $value = $this->optionValueService->findOptionValueById($id);
 
-        return view('options_value.edit', [
-            'value' => $value
+        return view('options_values.edit', [
+            'value' => $value,
+            'options' => $options
         ]);
     }
 
@@ -105,9 +107,9 @@ class OptionsValuesController extends Controller
      */
     public function update(OptionValuesRequest $request, int $id): RedirectResponse
     {
-        $this->optionValueService->update($id, $request->getValue());
+        $this->optionValueService->update($id, $request->getValue(), $request->getSelectedOption());
 
-        return redirect()->route('admin.options.values.index');
+        return redirect()->route('admin.options_values.index');
     }
 
     /**
@@ -120,6 +122,6 @@ class OptionsValuesController extends Controller
     {
         $this->optionValueService->delete($id);
 
-        return redirect()->route('admin.options.values.index');
+        return redirect()->route('admin.options_values.index');
     }
 }

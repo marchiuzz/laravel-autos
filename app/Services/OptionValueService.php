@@ -21,10 +21,11 @@ class OptionValueService
         $this->optionValueRespository = $optionValueRespository;
     }
 
-    public function update(int $optionId, string $value): int
+    public function update(int $optionId, string $value, int $selectedOption): int
     {
         return $this->optionValueRespository->update([
-            'option_value' => $value
+            'option_value' => $value,
+            'option_id' => $selectedOption
         ], $optionId);
     }
 
@@ -33,10 +34,11 @@ class OptionValueService
         return $this->optionValueRespository->makeQuery()->orderByDesc('created_at')->paginate();
     }
 
-    public function createNewOption(string $value): Model
+    public function createNewOption(string $value, int $optionId): Model
     {
         return $this->optionValueRespository->create([
-            'option_value' => $value
+            'option_value' => $value,
+            'option_id' => $optionId
         ]);
     }
 
