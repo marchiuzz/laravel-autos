@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin'], function(){
     Route::group(['middleware' => ['auth'], 'as' => 'admin.'], function(){
         Route::resource('autos', 'AutoController');
         Route::resource('categories', 'CategoryController');
+        Route::resource('options', 'OptionsController');
     });
 
 });
