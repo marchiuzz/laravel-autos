@@ -67,16 +67,18 @@ class AutoController extends Controller
     public function edit(Auto $auto): View
     {
         $categories = $this->categoryService->pluck();
+        $selectedCategories = $auto->categories->pluck('id')->toArray();
 
         return view('autos.edit', [
             'auto' => $auto,
-            'categories' => $categories
+            'categories' => $categories,
+            'selectedCategories' => $selectedCategories
         ]);
     }
 
     public function update(AutoRequest $autoRequest, Auto $auto): RedirectResponse
     {
-        $this->autoService->update($auto->id, $autoRequest->getMake(), $autoRequest->getModel());
+        $this->autoService->update($auto, $auto->id, $autoRequest->getMake(), $autoRequest->getModel(), $autoRequest->getSelectedCategories());
 
         return redirect()->route('admin.autos.index');
     }

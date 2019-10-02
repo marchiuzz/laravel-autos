@@ -13,6 +13,7 @@
                             <th>ID</th>
                             <th>Make</th>
                             <th>Model</th>
+                            <th>Categories</th>
                             <th>Created</th>
                             <th>Updated</th>
                             <th>Action</th>
@@ -22,6 +23,11 @@
                                 <td>{{ $auto->id }}</td>
                                 <td>{{ $auto->make }}</td>
                                 <td>{{ $auto->model }}</td>
+                                <td>
+                                    @foreach($auto->categories as $category)
+                                        {{$category->name}} <br/>
+                                    @endforeach
+                                </td>
                                 <td>{{ $auto->created_at }}</td>
                                 <td>{{ $auto->updated_at }}</td>
                                 <td>

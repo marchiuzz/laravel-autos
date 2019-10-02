@@ -20,12 +20,17 @@ class AutoService
         $this->autoRepository = $autoRepository;
     }
 
-    public function update(int $autoId, string $make, string $model): int
+    public function update(Auto $auto, int $autoId, string $make, string $model, array $categories): int
     {
-        return $this->autoRepository->update([
-            'make' => $make,
-            'model' => $model
-        ], $autoId);
+        /** @var Auto $auto */
+        $updatedAuto = $this->autoRepository->update([
+        'make' => $make,
+        'model' => $model,
+    ], $autoId);
+
+        $auto->categories()->sync($categories);
+
+        return $updatedAuto;
     }
 
     public function paginate(): LengthAwarePaginator
@@ -42,6 +47,7 @@ class AutoService
         ]);
 
         $auto->categories()->attach($categories);
+
 
         return $auto;
     }

@@ -32,8 +32,13 @@
                             <label for="model">Car Model</label>
                             <input type="text" name="model" id="model" value="{{ old('model', $auto->model) }}"><br/>
 
+{{--                            {{dd($selectedCategories)}}--}}
+
                             @foreach($categories as $categoryId => $name)
-                                <input type="checkbox" name="categories[]" value="{{$categoryId}}">{{$name}}<br/>
+                                <input type="checkbox" name="categories[]" value="{{$categoryId}}"
+
+                                {{ in_array($categoryId, $selectedCategories) ? "checked" : "" }}
+                                >{{  $name }}<br/>
                             @endforeach
 
                             <input type="submit" name="submit" value="Update">
