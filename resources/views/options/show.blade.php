@@ -12,6 +12,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
+                            <th>Values</th>
                             <th>Created</th>
                             <th>Updated</th>
                             <th>Action</th>
@@ -20,6 +21,11 @@
                             <tr>
                                 <td>{{ $option->id }}</td>
                                 <td>{{ $option->option_name }}</td>
+                                <td>
+                                    @foreach($option->values as $value)
+                                        {{$value->option_value}}<br/>
+                                    @endforeach
+                                </td>
                                 <td>{{ $option->created_at }}</td>
                                 <td>{{ $option->updated_at }}</td>
                                 <td>

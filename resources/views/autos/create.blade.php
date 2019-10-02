@@ -29,11 +29,26 @@
                             <input type="text" name="make" id="make" value="{{ old('make') }}"><br/>
 
                             <label for="model">Car Model</label>
-                            <input type="text" name="model" id="model" value="{{ old('model') }}"><br />
+                            <input type="text" name="model" id="model" value="{{ old('model') }}"><br/>
 
+                            {{_("Kategorija")}}
+                            <br>
                             @foreach($categories as $categoryId => $name)
-                                <input type="checkbox" name="categories[]" value="{{$categoryId}}">{{$name}}<br />
+                                <input type="checkbox" name="categories[]" value="{{$categoryId}}">{{$name}}<br/>
                             @endforeach
+
+                            <br/>
+                            @foreach($options as $option)
+                                <b>{{ucfirst($option->option_name)}}</b>
+                                <select name="options">
+                                    @foreach($option->values as $value)
+                                        <option value="{{ $value->id }}">{{ $value->option_value }}</option>
+                                    @endforeach
+                                </select>
+                                <br/>
+                            @endforeach
+
+                            <br/>
 
                             <input type="submit" name="submit" value="Add Car">
                         </form>

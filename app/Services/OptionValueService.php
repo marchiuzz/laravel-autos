@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Repositories\Abstracts\Repository;
 use App\Repositories\OptionValueRespository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +32,7 @@ class OptionValueService
 
     public function paginate(): LengthAwarePaginator
     {
-        return $this->optionValueRespository->makeQuery()->orderByDesc('created_at')->paginate();
+        return $this->optionValueRespository->makeQuery()->with('option')->orderByDesc('created_at')->paginate(Repository::DEFAULT_PER_PAGE);
     }
 
     public function createNewOption(string $value, int $optionId): Model

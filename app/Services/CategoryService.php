@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Repositories\Abstracts\Repository;
 use App\Repositories\CategoryRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +32,7 @@ class CategoryService
 
     public function paginate(): LengthAwarePaginator
     {
-        return $this->categoryRepository->makeQuery()->orderByDesc('created_at')->paginate();
+        return $this->categoryRepository->makeQuery()->orderByDesc('created_at')->paginate(Repository::DEFAULT_PER_PAGE);
     }
 
     public function createNewCategory(string $name): Model

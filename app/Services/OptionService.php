@@ -4,8 +4,10 @@
 namespace App\Services;
 
 
+use App\Repositories\Abstracts\Repository;
 use App\Repositories\OptionRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -30,7 +32,7 @@ class OptionService
 
     public function paginate(): LengthAwarePaginator
     {
-        return $this->optionRepository->makeQuery()->orderByDesc('created_at')->paginate();
+        return $this->optionRepository->makeQuery()->with('values')->orderByDesc('created_at')->paginate(Repository::DEFAULT_PER_PAGE);
     }
 
     public function createNewOption(string $name): Model
@@ -52,7 +54,14 @@ class OptionService
 
     public function pluck(): Collection
     {
-        $categories = $this->optionRepository->makeQuery()->pluck('option_name', 'id');
-        return $categories;
+        $options = $this->optionRepository->makeQuery()->pluck('option_name', 'id');
+        return $options;
+    }
+
+    public function with(): Collection
+    {
+        $options = $this->optionRepository->with(['values'])->get();
+
+        return $options;
     }
 }

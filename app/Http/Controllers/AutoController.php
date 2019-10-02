@@ -8,6 +8,7 @@ use App\Http\Requests\AutoRequest;
 
 use App\Services\AutoService;
 use App\Services\CategoryService;
+use App\Services\OptionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,16 +24,21 @@ class AutoController extends Controller
      */
     protected $autoService;
     protected $categoryService;
+    /**
+     * @var OptionService
+     */
+    private $optionService;
 
     /**
      * AutoController constructor.
      * @param AutoService $autoService
      * @param CategoryService $categoryService
      */
-    public function __construct(AutoService $autoService, CategoryService $categoryService)
+    public function __construct(AutoService $autoService, CategoryService $categoryService, OptionService $optionService)
     {
         $this->autoService = $autoService;
         $this->categoryService = $categoryService;
+        $this->optionService = $optionService;
     }
 
     /**
@@ -50,10 +56,11 @@ class AutoController extends Controller
     public function create(): View
     {
         $categories = $this->categoryService->pluck();
-
+        $options = $this->optionService->with();
 
         return view('autos.create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'options' => $options
         ]);
     }
 
