@@ -32,14 +32,30 @@
                             <label for="model">Car Model</label>
                             <input type="text" name="model" id="model" value="{{ old('model', $auto->model) }}"><br/>
 
-{{--                            {{dd($selectedCategories)}}--}}
-
                             @foreach($categories as $categoryId => $name)
                                 <input type="checkbox" name="categories[]" value="{{$categoryId}}"
 
-                                {{ in_array($categoryId, $selectedCategories) ? "checked" : "" }}
+                                    {{ in_array($categoryId, $selectedCategories) ? "checked" : "" }}
                                 >{{  $name }}<br/>
                             @endforeach
+
+
+                            <br/>
+                            @foreach($options as $option)
+                                <b>{{ucfirst($option->option_name)}}</b>
+                                <select name="options[]">
+                                    <option value="">Choose</option>
+                                    @foreach($option->values as $value)
+                                        <option
+                                            value="{{ $value->id }}" {{in_array($value->id, $selectedOptionValues) ? "selected" : ""}}>
+                                            {{ $value->option_value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <br/>
+                            @endforeach
+
+                            <br/>
 
                             <input type="submit" name="submit" value="Update">
                         </form>

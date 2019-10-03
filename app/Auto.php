@@ -32,6 +32,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Auto whereImage($value)
  * @property-read Collection|Category[] $categories
  * @property-read int|null $categories_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\OptionValue[] $option_value
+ * @property-read int|null $option_value_count
  */
 class Auto extends Model
 {
@@ -46,8 +48,8 @@ class Auto extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function options(): HasMany
+    public function option_value(): BelongsToMany
     {
-        return $this->hasMany(Option::class);
+        return $this->belongsToMany(OptionValue::class, 'auto_option_values');
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Auto;
@@ -20,34 +21,36 @@ class AutoService
         $this->autoRepository = $autoRepository;
     }
 
-    public function update(Auto $auto, int $autoId, string $make, string $model, array $categories): int
+    public function update(Auto $auto, int $autoId, string $make, string $model, array $categories, array $selectedOptionsValues): int
     {
         /** @var Auto $auto */
         $updatedAuto = $this->autoRepository->update([
-        'make' => $make,
-        'model' => $model,
-    ], $autoId);
+            'make' => $make,
+            'model' => $model,
+        ], $autoId);
 
         $auto->categories()->sync($categories);
+        $auto->option_value()->sync($selectedOptionsValues);
 
         return $updatedAuto;
     }
 
     public function paginate(): LengthAwarePaginator
     {
-        return $this->autoRepository->with(['categories'])->orderByDesc('id')->paginate(Repository::DEFAULT_PER_PAGE);
+        return $this->autoRepository->with(['categories', 'option_value.option'])->orderByDesc('id')->paginate(Repository::DEFAULT_PER_PAGE);
     }
 
-    public function createNewCar(string $make, string $model, array $categories): Model
+    public function createNewCar(string $make, string $model, array $categories, array $selectedOptionsValues): Model
     {
         /** @var Auto $auto */
         $auto = $this->autoRepository->create([
             'make' => $make,
-            'model' => $model
+            'model' => $model,
         ]);
 
         $auto->categories()->attach($categories);
 
+        $auto->option_value()->attach($selectedOptionsValues);
 
         return $auto;
     }
@@ -56,9 +59,9 @@ class AutoService
      * @param int $id
      * @return Model|null
      */
-    public function findAutoById(int $id): ?Model
+    public function findAutoById(int $id): Auto
     {
-        return $this->autoRepository->find($id);
+        return $this->autoRepository->makeQuery()->with(['option_value.option'])->findOrFail($id);
     }
 
     public function delete(int $id)

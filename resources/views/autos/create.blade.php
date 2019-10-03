@@ -40,7 +40,8 @@
                             <br/>
                             @foreach($options as $option)
                                 <b>{{ucfirst($option->option_name)}}</b>
-                                <select name="options">
+                                <select name="options[]">
+                                    <option value="">Choose</option>
                                     @foreach($option->values as $value)
                                         <option value="{{ $value->id }}">{{ $value->option_value }}</option>
                                     @endforeach

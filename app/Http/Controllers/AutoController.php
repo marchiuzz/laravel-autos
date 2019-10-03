@@ -49,7 +49,7 @@ class AutoController extends Controller
         $autos = $this->autoService->paginate();
 
         return view('autos.index', [
-            'autos' => $autos
+            'autos' => $autos,
         ]);
     }
 
@@ -60,13 +60,13 @@ class AutoController extends Controller
 
         return view('autos.create', [
             'categories' => $categories,
-            'options' => $options
+            'options' => $options,
         ]);
     }
 
     public function store(AutoRequest $request): RedirectResponse
     {
-        $this->autoService->createNewCar($request->getMake(), $request->getModel(), $request->getSelectedCategories());
+        $this->autoService->createNewCar($request->getMake(), $request->getModel(), $request->getSelectedCategories(), $request->getSelectedOptionsValues());
 
         return redirect()->route('admin.autos.index');
     }
@@ -75,17 +75,21 @@ class AutoController extends Controller
     {
         $categories = $this->categoryService->pluck();
         $selectedCategories = $auto->categories->pluck('id')->toArray();
+        $options = $this->optionService->with();
+        $selectedOptionValues = $auto->option_value->pluck('id')->toArray();
 
         return view('autos.edit', [
             'auto' => $auto,
             'categories' => $categories,
-            'selectedCategories' => $selectedCategories
+            'selectedCategories' => $selectedCategories,
+            'options' => $options,
+            'selectedOptionValues' => $selectedOptionValues,
         ]);
     }
 
     public function update(AutoRequest $autoRequest, Auto $auto): RedirectResponse
     {
-        $this->autoService->update($auto, $auto->id, $autoRequest->getMake(), $autoRequest->getModel(), $autoRequest->getSelectedCategories());
+        $this->autoService->update($auto, $auto->id, $autoRequest->getMake(), $autoRequest->getModel(), $autoRequest->getSelectedCategories(), $autoRequest->getSelectedOptionsValues());
 
         return redirect()->route('admin.autos.index');
     }
@@ -93,8 +97,9 @@ class AutoController extends Controller
     public function show(int $id): View
     {
         $auto = $this->autoService->findAutoById($id);
+
         return view('autos.show', [
-            'auto' => $auto
+            'auto' => $auto,
         ]);
     }
 
